@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "id": "omarchy.ai-usage",
+  "name": "AI Usage",
+  "version": "1.0.0",
+  "author": "Omarchy",
+  "license": "MIT",
+  "description": "AI coding usage history, provider quotas, hover summary and analytics.",
+  "kinds": ["service", "bar-widget", "overlay"],
+  "keepLoaded": true,
+  "entryPoints": {
+    "service": "Service.qml",
+    "barWidget": "BarWidget.qml",
+    "overlay": "Analytics.qml"
+  },
+  "barWidget": {
+    "displayName": "AI Usage",
+    "description": "Local AI usage, official quotas and analytics.",
+    "category": "AI",
+    "aliases": ["ai-usage"],
+    "allowMultiple": false,
+    "defaults": {
+      "display": "icon",
+      "refreshMinutes": 10,
+      "codexEnabled": true,
+      "kimiEnabled": false,
+      "grokEnabled": false,
+      "donutMetric": "Cost",
+      "donutGroupBy": "Provider",
+      "defaultRange": "Day",
+      "showEstimatedCost": true,
+      "showLocalHistory": true
+    },
+    "schema": [
+      {
+        "key": "display",
+        "type": "select",
+        "label": "Bar display",
+        "options": ["cost", "tokens", "icon"],
+        "defaultValue": "icon"
+      },
+      {
+        "key": "refreshMinutes",
+        "type": "integer",
+        "label": "Refresh interval (minutes)",
+        "min": 1,
+        "max": 120,
+        "step": 1,
+        "defaultValue": 10
+      }
+    ]
+  }
+}

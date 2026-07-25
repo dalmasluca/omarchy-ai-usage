@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Official Kimi Code plan quota for omarchy.ai-usage.
+"""Official Kimi Code plan quota for dalmasluca.ai-usage.
 
 Calls the same endpoint the CLI's /usage slash command uses:
 

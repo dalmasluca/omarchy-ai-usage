@@ -1,4 +1,4 @@
-// Pure data helpers for omarchy.ai-usage. No Qt/QML calls so the same file
+// Pure data helpers for dalmasluca.ai-usage. No Qt/QML calls so the same file
 // runs under node for the self-check at the bottom.
 
 function num(value) {

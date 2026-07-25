@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Safe provider detection for omarchy.ai-usage.
+"""Safe provider detection for dalmasluca.ai-usage.
 
 One script, dispatched by provider id on argv[1]:
 

@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "omarchy.ai-usage",
+  "id": "dalmasluca.ai-usage",
   "name": "AI Usage",
   "version": "1.0.0",
-  "author": "Omarchy",
+  "author": "dalmasluca",
   "license": "MIT",
   "description": "AI coding usage history, provider quotas, hover summary and analytics.",
   "kinds": ["service", "bar-widget", "overlay"],

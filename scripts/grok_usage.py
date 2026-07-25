@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Official Grok Build credit quota for omarchy.ai-usage.
+"""Official Grok Build credit quota for dalmasluca.ai-usage.
 
 Calls the same endpoint the CLI's /usage command fetches (source:
 gork-build crates/codegen/xai-grok-shell/src/extensions/billing.rs):

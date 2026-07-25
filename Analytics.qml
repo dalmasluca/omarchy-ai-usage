@@ -8,7 +8,7 @@ import qs.Ui
 import "Usage.js" as Usage
 import "components"
 
-// Analytics overlay for omarchy.ai-usage (see DETAILING.md).
+// Analytics overlay for dalmasluca.ai-usage (see DETAILING.md).
 //
 // Shell: global header → horizontal nav + range selector → page content.
 // No permanent side rail: the full width belongs to the data. Pages:
@@ -24,7 +24,7 @@ Item {
   property var manifest: null
   property bool opened: false
 
-  readonly property string pluginId: manifest && manifest.id ? manifest.id : "omarchy.ai-usage"
+  readonly property string pluginId: manifest && manifest.id ? manifest.id : "dalmasluca.ai-usage"
   readonly property int rev: service ? service.revision : 0
 
   // --- visualization state (persisted) ----------------------------------
@@ -159,7 +159,7 @@ Item {
     visible: root.opened
     anchors { top: true; bottom: true; left: true; right: true }
     color: "transparent"
-    WlrLayershell.namespace: "omarchy-ai-usage"
+    WlrLayershell.namespace: "dalmasluca-ai-usage"
     WlrLayershell.layer: WlrLayer.Overlay
     WlrLayershell.keyboardFocus: WlrKeyboardFocus.Exclusive
     exclusionMode: ExclusionMode.Ignore

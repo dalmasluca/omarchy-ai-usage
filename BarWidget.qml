@@ -8,7 +8,7 @@ import "components"
 
 BarWidget {
   id: root
-  moduleName: "omarchy.ai-usage"
+  moduleName: "dalmasluca.ai-usage"
 
   property var service: null
   property bool popupOpen: false
@@ -35,8 +35,8 @@ BarWidget {
   function resolveService() {
     if (root.service || !root.bar || !root.bar.shell) return
     var sh = root.bar.shell
-    var s = sh.serviceFor ? sh.serviceFor("omarchy.ai-usage") : null
-    if (!s && sh.ensureService) s = sh.ensureService("omarchy.ai-usage")
+    var s = sh.serviceFor ? sh.serviceFor("dalmasluca.ai-usage") : null
+    if (!s && sh.ensureService) s = sh.ensureService("dalmasluca.ai-usage")
     if (s) root.service = s
   }
   Component.onCompleted: resolveService()
@@ -56,7 +56,7 @@ BarWidget {
 
   function summonOverlay() {
     root.popupOpen = false
-    if (root.bar && root.bar.shell && root.bar.shell.summon) root.bar.shell.summon("omarchy.ai-usage", "{}")
+    if (root.bar && root.bar.shell && root.bar.shell.summon) root.bar.shell.summon("dalmasluca.ai-usage", "{}")
   }
 
   function forceRefresh() {

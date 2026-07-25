@@ -4,7 +4,7 @@ import Quickshell.Io
 import qs.Commons
 import "Usage.js" as Usage
 
-// Single shared data source for omarchy.ai-usage. No UI here. Loaded by the
+// Single shared data source for dalmasluca.ai-usage. No UI here. Loaded by the
 // shell's service host; injected with shell/manifest. Combines:
 //   - local token/cost history from ccusage (never presented as official quota)
 //   - official Codex rate limits via the shared scanner (one app-server poll
@@ -55,7 +55,7 @@ Item {
     var sh = root.shell
     if (!sh || !sh.shellConfig) return {}
     var config = sh.shellConfig
-    var key = "omarchy.ai-usage"
+    var key = "dalmasluca.ai-usage"
     if (config.bar && config.bar.layout) {
       var sections = ["left", "center", "right"]
       for (var s = 0; s < sections.length; s++) {

@@ -49,15 +49,32 @@ the plugin never invalidate each other's credentials.
 
 ## Install
 
-Copy the plugin into your quickshell config:
+### Omarchy (upstream CLI)
 
 ```sh
-cp -r plugins/ai-usage ~/.config/quickshell/plugins/
+omarchy plugin add https://github.com/dalmasluca/omarchy-ai-usage.git --enable
+omarchy bar plugin add dalmasluca.ai-usage
+# optional: bar display mode (icon | cost | tokens)
+omarchy bar plugin set dalmasluca.ai-usage display cost
 ```
 
-Then enable the **AI Usage** bar widget from your shell's plugin/widget
-settings (widget id: `omarchy.ai-usage`). Codex monitoring is on by default;
-Kimi Code and Grok Build are opt-in from the plugin's Settings → Connections.
+### Manual / other quickshell forks
+
+```sh
+git clone https://github.com/dalmasluca/omarchy-ai-usage.git
+cp -r omarchy-ai-usage ~/.config/quickshell/plugins/ai-usage
+```
+
+Then enable the **AI Usage** bar widget from your shell's widget settings
+(plugin id: `dalmasluca.ai-usage`).
+
+> **Fork note:** if your `omarchy` CLI targets a different shell config than
+> the running quickshell (e.g. it writes `~/.config/omarchy/shell.json` while
+> your shell reads `~/.config/quickshell/shell-user.json`), use the manual
+> install — the CLI would clone the plugin but not place it in your bar.
+
+Codex monitoring is on by default; Kimi Code and Grok Build are opt-in from
+the plugin's Settings → Connections.
 
 Widget options (manifest defaults, editable per-widget):
 

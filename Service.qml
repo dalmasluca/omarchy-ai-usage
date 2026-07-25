@@ -23,7 +23,21 @@ Item {
   property string omarchyPath: ""
 
   readonly property string home: Quickshell.env("HOME") || ""
-  readonly property string scannerPath: String(Qt.resolvedUrl("../../Commons/scripts/codex_usage_scanner.py")).replace("file://", "")
+  // The Codex scanner lives in the shell's shared Commons, whose location
+  // relative to the plugin depends on the install layout (plugin under
+  // quickshell/plugins vs omarchy/plugins). First existing candidate wins.
+  readonly property var scannerCandidates: [
+    String(Qt.resolvedUrl("../../Commons/scripts/codex_usage_scanner.py")).replace("file://", ""),
+    home + "/.config/quickshell/Commons/scripts/codex_usage_scanner.py",
+    home + "/.config/omarchy/Commons/scripts/codex_usage_scanner.py"
+  ]
+
+  function scannerCommand(force) {
+    return ["bash", "-c",
+      'c1="$1"; c2="$2"; c3="$3"; shift 3; for p in "$c1" "$c2" "$c3"; do [ -f "$p" ] && exec python3 "$p" "$@"; done; exit 127',
+      "codex-quota"
+    ].concat(root.scannerCandidates, ["--quota-only"], force ? ["--force"] : [])
+  }
   readonly property string probePath: String(Qt.resolvedUrl("scripts/provider_probe.py")).replace("file://", "")
   readonly property string kimiQuotaPath: String(Qt.resolvedUrl("scripts/kimi_usage.py")).replace("file://", "")
   readonly property string grokQuotaPath: String(Qt.resolvedUrl("scripts/grok_usage.py")).replace("file://", "")
@@ -317,7 +331,7 @@ Item {
 
     // Codex official quota via shared scanner (cache-aware; --force bypasses)
     if (providerEnabled("codex") && !codexProc.running) {
-      codexProc.command = ["python3", root.scannerPath, "--quota-only"].concat(force ? ["--force"] : [])
+      codexProc.command = root.scannerCommand(force)
       codexProc.running = true
     }
 
@@ -342,7 +356,7 @@ Item {
   function refreshProvider(id) {
     if (id === "codex") {
       if (!codexProc.running) {
-        codexProc.command = ["python3", root.scannerPath, "--quota-only", "--force"]
+        codexProc.command = root.scannerCommand(true)
         codexProc.running = true
       }
       return

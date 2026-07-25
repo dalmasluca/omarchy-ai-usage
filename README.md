@@ -17,9 +17,6 @@ analytics overlay for the [Omarchy](https://github.com/omarchy) quickshell fork.
 
 ![Settings — Connections](docs/settings.png)
 
-> Drop your screenshots into `docs/` with these exact names (see
-> [docs/README.md](docs/README.md)).
-
 ## Provider integrations
 
 | Provider | Official quota | How |

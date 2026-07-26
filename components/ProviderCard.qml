@@ -27,6 +27,10 @@ BorderSurface {
   implicitHeight: body.implicitHeight + contentTopInset + contentBottomInset
 
   readonly property bool hasQuota: provider.metrics && provider.metrics.length > 0
+  // Grok: metrics[0] is the pool row (Weekly credits); the rest are
+  // per-product slices of the same window, collapsed behind a toggle.
+  readonly property bool hasBreakdown: provider.id === "grok" && hasQuota && provider.metrics.length > 1
+  property bool expanded: false
 
   ColumnLayout {
     id: body
@@ -76,8 +80,19 @@ BorderSurface {
 
     // Official quota meters.
     Repeater {
-      model: root.hasQuota ? root.provider.metrics : []
+      model: root.hasQuota ? (root.hasBreakdown && !root.expanded ? root.provider.metrics.slice(0, 1) : root.provider.metrics) : []
       QuotaMeter { Layout.fillWidth: true; metric: modelData; fillColor: root.providerColor }
+    }
+
+    Button {
+      visible: root.hasBreakdown
+      text: root.expanded ? "Hide breakdown ▴" : "Show breakdown ▾"
+      foreground: Util.alpha(Color.accent, 0.9)
+      fontFamily: Style.font.family
+      fontSize: Style.font.caption
+      horizontalPadding: Style.space(8)
+      verticalPadding: Style.space(4)
+      onClicked: root.expanded = !root.expanded
     }
 
     // Fallback when no machine-readable quota exists.

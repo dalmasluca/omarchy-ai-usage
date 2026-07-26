@@ -185,7 +185,11 @@ BarWidget {
               font.bold: true
             }
             Repeater {
-              model: modelData.metrics
+              // Grok: pool row only (Weekly credits) in the hover popup; the
+              // per-product breakdown of the same window lives behind the
+              // analytics card toggle. metrics[0] is the pool by contract
+              // (grok_usage.py emits it first, pinned by its self-check).
+              model: provBlock.modelData.id === "grok" ? (provBlock.modelData.metrics || []).slice(0, 1) : provBlock.modelData.metrics
               QuotaMeter { Layout.fillWidth: true; metric: modelData; barHeight: Style.space(5); fillColor: Color.chartFor(provBlock.modelData.id) }
             }
           }

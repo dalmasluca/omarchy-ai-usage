@@ -197,10 +197,10 @@ def normalize(payload):
     return metrics
   period = config.get("currentPeriod") if isinstance(config.get("currentPeriod"), dict) else {}
   pct = config.get("creditUsagePercent")
-  if pct is None:  # deprecated legacy shape
-    limit = (config.get("monthlyLimit") or {}).get("val") or 0
+  if pct is None:  # proto3 JSON omits zero-valued scalars: absent == 0% used
+    limit = (config.get("monthlyLimit") or {}).get("val") or 0  # legacy shape
     used = (config.get("used") or {}).get("val") or 0
-    pct = (used / limit * 100.0) if limit > 0 else None
+    pct = (used / limit * 100.0) if limit > 0 else 0.0  # CLI: None => 0.0
   if pct is not None:
     metrics.append({
       "label": PERIOD_LABELS.get(str(period.get("type") or ""), "Credits"),
@@ -249,6 +249,22 @@ def self_check():
                        "billingPeriodEnd": "2026-08-01T00:00:00Z"}}
   metrics = normalize(legacy)
   assert metrics[0]["percent"] == 0.25 and metrics[0]["resetsAt"] == "2026-08-01T00:00:00Z"
+  # proto3 omits zero scalars: a fresh period with no usage has no
+  # creditUsagePercent at all -> must read as 0%, not "no usage" (the CLI
+  # shows 0% here; treating it as disconnected dropped the provider).
+  zero = {"config": {
+    "currentPeriod": {"type": "USAGE_PERIOD_TYPE_WEEKLY",
+                      "start": "2026-07-28T02:33:55.961189+00:00",
+                      "end": "2026-08-04T02:33:55.961189+00:00"},
+    "onDemandCap": {"val": 0}, "onDemandUsed": {"val": 0},
+    "isUnifiedBillingUser": True, "prepaidBalance": {"val": 0},
+    "topUpMethod": "TOP_UP_METHOD_SAVED_PAYMENT_METHOD",
+    "billingPeriodStart": "2026-07-28T02:33:55.961189+00:00",
+    "billingPeriodEnd": "2026-08-04T02:33:55.961189+00:00",
+  }}
+  metrics = normalize(zero)
+  assert metrics == [{"label": "Weekly credits", "percent": 0.0,
+                      "resetsAt": "2026-08-04T02:33:55Z"}], metrics
   assert normalize({}) == [] and normalize(None) == []
 
 

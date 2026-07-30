@@ -1196,6 +1196,9 @@ Item {
       if (sortKey === key) sortDesc = !sortDesc
       else { sortKey = key; sortDesc = true }
     }
+    function hdr(key) {
+      return sortKey === key ? (sortDesc ? " ▾" : " ▴") : ""
+    }
 
     ColumnLayout {
       id: recCol
@@ -1240,15 +1243,14 @@ Item {
             Layout.topMargin: Style.space(10)
             Layout.bottomMargin: Style.space(8)
             spacing: Style.space(12)
-            function hdr(key) { return recPage.sortKey === key ? (recPage.sortDesc ? " ▾" : " ▴") : "" }
-            Th { Layout.preferredWidth: Style.space(96);  text: "Date" + hdr("date");  align: Text.AlignLeft;  sortable: true; onPick: recPage.toggleSort("date") }
+            Th { Layout.preferredWidth: Style.space(96);  text: "Date" + recPage.hdr("date");  align: Text.AlignLeft;  sortable: true; onPick: recPage.toggleSort("date") }
             Th { Layout.preferredWidth: Style.space(110); text: "Agent";               align: Text.AlignLeft }
             Th { Layout.fillWidth: true;                  text: "Model";               align: Text.AlignLeft }
             Th { Layout.preferredWidth: Style.space(70);  text: "Input";               align: Text.AlignRight }
             Th { Layout.preferredWidth: Style.space(70);  text: "Output";              align: Text.AlignRight }
             Th { Layout.preferredWidth: Style.space(70);  text: "Cache";               align: Text.AlignRight }
-            Th { Layout.preferredWidth: Style.space(78);  text: "Total" + hdr("total"); align: Text.AlignRight; sortable: true; onPick: recPage.toggleSort("total") }
-            Th { Layout.preferredWidth: Style.space(78); visible: root.showEstimatedCost; text: "Cost" + hdr("cost"); align: Text.AlignRight; sortable: true; onPick: recPage.toggleSort("cost") }
+            Th { Layout.preferredWidth: Style.space(78);  text: "Total" + recPage.hdr("total"); align: Text.AlignRight; sortable: true; onPick: recPage.toggleSort("total") }
+            Th { Layout.preferredWidth: Style.space(78); visible: root.showEstimatedCost; text: "Cost" + recPage.hdr("cost"); align: Text.AlignRight; sortable: true; onPick: recPage.toggleSort("cost") }
           }
           PanelSeparator { Layout.fillWidth: true; foreground: Color.foreground; strength: 0.12 }
 
